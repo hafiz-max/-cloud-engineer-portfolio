@@ -33,11 +33,19 @@ jobs:
 
           client = app.test_client()
 
+          # Test 1: /health endpoint
           response = client.get("/health")
           assert response.status_code == 200
           assert response.json["status"] == "healthy"
 
           print("API health check passed!")
+
+          # Test 2: /version endpoint
+          version_response = client.get("/version")
+          assert version_response.status_code == 200
+          assert_version.json["version"] == "1.1.0"
+
+          print("Version endpoint test passed!")
           PY
 
       - name: Build Docker image
